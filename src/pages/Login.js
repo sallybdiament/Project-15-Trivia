@@ -27,6 +27,10 @@ class Login extends React.Component {
       }
     }
 
+    handleSettingsClick = () => {
+      const { history } = this.props;
+      history.push('./settings');
+
     handleClick = async () => {
       const { history } = this.props;
       const link = 'https://opentdb.com/api_token.php?command=request';
@@ -72,6 +76,14 @@ class Login extends React.Component {
           >
             Play
           </button>
+          <button
+            name="btnSettings"
+            onClick={ this.handleSettingsClick }
+            type="button"
+            data-testid="btn-settings"
+          >
+            Configurações
+          </button>
         </form>
       );
     }
@@ -79,6 +91,7 @@ class Login extends React.Component {
 
 Login.propTypes = {
   history: PropTypes.objectOf(PropTypes.any),
+    push: PropTypes.func,
 }.isRequired;
 
 export default Login;

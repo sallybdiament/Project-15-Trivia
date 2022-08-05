@@ -1,5 +1,6 @@
 // Funcionalidades
 import React from 'react';
+import PropTypes from 'prop-types';
 
 // Importações
 
@@ -24,6 +25,11 @@ class Login extends React.Component {
       } else {
         this.setState({ desabilitado: true });
       }
+    }
+
+    handleSettingsClick = () => {
+      const { history } = this.props;
+      history.push('./settings');
     }
 
     render() {
@@ -61,9 +67,21 @@ class Login extends React.Component {
           >
             Play
           </button>
+          <button
+            name="btnSettings"
+            onClick={ this.handleSettingsClick }
+            type="button"
+            data-testid="btn-settings"
+          >
+            Configurações
+          </button>
         </form>
       );
     }
 }
+
+Login.propTypes = {
+  push: PropTypes.func,
+}.isRequired;
 
 export default Login;

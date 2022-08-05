@@ -1,5 +1,6 @@
 // Funcionalidades
 import React from 'react';
+import PropTypes from 'prop-types';
 
 // Importações
 
@@ -24,6 +25,16 @@ class Login extends React.Component {
       } else {
         this.setState({ desabilitado: true });
       }
+    }
+
+    handleClick = async () => {
+      const { history } = this.props;
+      const link = 'https://opentdb.com/api_token.php?command=request';
+      const response = await fetch(link);
+      const resultado = await response.json();
+      const salvarStorage = localStorage.setItem('token', resultado.token);
+      history.push('/game');
+      return salvarStorage;
     }
 
     render() {
@@ -65,5 +76,9 @@ class Login extends React.Component {
       );
     }
 }
+
+Login.propTypes = {
+  history: PropTypes.objectOf(PropTypes.any),
+}.isRequired;
 
 export default Login;

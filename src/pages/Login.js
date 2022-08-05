@@ -30,6 +30,7 @@ class Login extends React.Component {
     handleSettingsClick = () => {
       const { history } = this.props;
       history.push('./settings');
+    }
 
     handleClick = async () => {
       const { history } = this.props;
@@ -91,7 +92,7 @@ class Login extends React.Component {
 
 Login.propTypes = {
   history: PropTypes.objectOf(PropTypes.any),
-    push: PropTypes.func,
+  push: PropTypes.func,
 }.isRequired;
 
 export default Login;

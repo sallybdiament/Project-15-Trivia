@@ -10,7 +10,7 @@ const testName = 'name';
 
 describe('test the Login component', () => {
   it('checks if the function desabilitar() works', () => {
-    render(<Login />);
+    renderWithRouterAndRedux(<Login />);
     const emailInput = screen.getByLabelText('Digite o seu E-mail');
     const nameInput = screen.getByLabelText('Digite o seu Nome');
     const btn = screen.getByRole('button', { name: 'Play' });
@@ -42,6 +42,9 @@ describe('test the Login component', () => {
 
     const { pathname } = history.location;
     expect(pathname).toBe('/game');
+
+    const name = screen.getByTestId('header-player-name');
+    expect(name).toBeInTheDocument();
   });
 
   it('checks the "Configurações" button', () => {
@@ -54,7 +57,4 @@ describe('test the Login component', () => {
     const { pathname } = history.location;
     expect(pathname).toBe('/settings');
   })
-
-
-     
 })

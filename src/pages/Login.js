@@ -53,7 +53,7 @@ class Login extends React.Component {
       const hashedEmail = md5(email).toString();
       fetch(`https://www.gravatar.com/avatar/${hashedEmail}`)
         .then((res) => {
-          data = { email: res.url, name };
+          data = { photo: res.url, name, email };
           storePlayer(data);
         });
     }

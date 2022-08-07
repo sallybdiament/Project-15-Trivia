@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 class Header extends React.Component {
   render() {
     const { photo, name, score } = this.props;
-    console.log(photo);
     return (
       <header>
         <div>
@@ -29,7 +28,7 @@ Header.defaultProps = {
 };
 
 const mapStateToProps = (state) => ({
-  photo: state.player.gravatarEmail,
+  photo: state.player.photoUrl,
   name: state.player.name,
   score: state.player.score,
 });

@@ -1,4 +1,4 @@
-import { STORE_PHOTO } from '../actions/index';
+import { STORE_PLAYER } from '../actions/index';
 
 const DEFAULT_STATE = {
   name: '',
@@ -9,7 +9,7 @@ const DEFAULT_STATE = {
 
 const playerReducer = (state = DEFAULT_STATE, action) => {
   switch (action.type) {
-  case STORE_PHOTO:
+  case STORE_PLAYER:
     return {
       ...state,
       gravatarEmail: action.payload.email,

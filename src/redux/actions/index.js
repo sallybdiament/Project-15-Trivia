@@ -1,6 +1,6 @@
-export const STORE_PHOTO = 'STORE_PHOTO';
+export const STORE_PLAYER = 'STORE_PLAYER';
 
-export const storePhoto = (data) => ({
-  type: STORE_PHOTO,
+export const storePlayer = (data) => ({
+  type: STORE_PLAYER,
   payload: data,
 });

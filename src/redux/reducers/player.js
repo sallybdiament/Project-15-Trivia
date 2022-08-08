@@ -14,6 +14,7 @@ const playerReducer = (state = DEFAULT_STATE, action) => {
       ...state,
       gravatarEmail: action.payload.email,
       name: action.payload.name,
+      photoUrl: action.payload.photo,
     };
   default:
     return state;

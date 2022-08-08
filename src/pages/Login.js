@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import md5 from 'crypto-js/md5';
 import { connect } from 'react-redux';
-import { storePlayer as StorePlayerDispatch } from '../redux/actions/index';
+import { storePlayer } from '../redux/actions/index';
 
 // Importações
 
@@ -49,12 +49,12 @@ class Login extends React.Component {
 
     gravatar = (email, name) => {
       let data = {};
-      const { storePlayer } = this.props;
+      const { storePlayerDispatch } = this.props;
       const hashedEmail = md5(email).toString();
       fetch(`https://www.gravatar.com/avatar/${hashedEmail}`)
         .then((res) => {
-          data = { email: res.url, name };
-          storePlayer(data);
+          data = { photo: res.url, name, email };
+          storePlayerDispatch(data);
         });
     }
 
@@ -113,7 +113,7 @@ Login.propTypes = {
 }.isRequired;
 
 const mapDispatchToProps = (dispatch) => ({
-  storePlayer: (data) => dispatch(StorePlayerDispatch(data)),
+  storePlayerDispatch: (data) => dispatch(storePlayer(data)),
 });
 
 export default connect(null, mapDispatchToProps)(Login);

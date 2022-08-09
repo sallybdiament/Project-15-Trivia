@@ -3,9 +3,12 @@ import PropTypes from 'prop-types';
 import Header from '../components/Header';
 
 class Game extends React.Component {
-  state = {
-    questionList: [],
-    loaded: false,
+  constructor() {
+    super();
+    this.state = {
+      questionList: [],
+      loaded: false,
+    }
   }
 
   componentDidMount() {

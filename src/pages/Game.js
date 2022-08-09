@@ -3,13 +3,11 @@ import PropTypes from 'prop-types';
 import Header from '../components/Header';
 
 class Game extends React.Component {
-  constructor() {
-    super();
-    this.state = {
+  state = {
       questionList: [],
       loaded: false,
     }
-  }
+  
 
   componentDidMount() {
     this.fetchQuestions();
@@ -30,12 +28,13 @@ class Game extends React.Component {
 
   renderQuestions = () => {
     const { questionList } = this.state;
+    if (!questionList[0]) return null;
     const correct = (
       <button data-answer="correct" key="correct" type="button" data-testid="correct-answer">
-        {questionList[0]?.correct_answer}
+        {questionList[0].correct_answer}
       </button>);
      
-    const incorrects = questionList[0]?.incorrect_answers.map(
+    const incorrects = questionList[0].incorrect_answers.map(
       (resp, index) => (
         <button
           data-answer="incorrect"
@@ -73,13 +72,19 @@ class Game extends React.Component {
   //  })
   // }
 
+  renderText = (title) => {
+    const { questionList } = this.state;
+    if (questionList[0]) return questionList[0][`${title}`];
+    else return null;
+  }
+
   render() {
     const { questionList, loaded } = this.state;
     return (
       <>
         <Header />
-        <p data-testid="question-category">{questionList[0]?.category}</p>
-        <p data-testid="question-text">{questionList[0]?.question}</p>
+        <p data-testid="question-category">{ this.renderText('category') }</p>
+        <p data-testid="question-text">{ this.renderText('question') }</p>
         <div type="div" data-testid="answer-options">
           { loaded && this.renderQuestions() }
         </div>
@@ -92,4 +97,6 @@ Game.propTypes = {
 
 export default Game;
 
+// <p data-testid="question-category">{questionList[0]?.category}</p>
+// <p data-testid="question-text">{questionList[0]?.question}</p>
 //<div type="div" data-testid="answer-options" onClick={ this.handleClick }>

@@ -1,4 +1,4 @@
-import { STORE_PLAYER } from '../actions/index';
+import { STORE_PLAYER, STORE_SCORE } from '../actions/index';
 
 const DEFAULT_STATE = {
   name: '',
@@ -15,6 +15,12 @@ const playerReducer = (state = DEFAULT_STATE, action) => {
       gravatarEmail: action.payload.email,
       name: action.payload.name,
       photoUrl: action.payload.photo,
+    };
+  case STORE_SCORE:
+    return {
+      ...state,
+      score: state.score + action.payload,
+      assertions: state.assertions + 1,
     };
   default:
     return state;

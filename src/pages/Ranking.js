@@ -15,7 +15,7 @@ class Ranking extends React.Component {
             name="btnPlayAgain"
             onClick={ this.handleClickPlayAgain }
             type="button"
-            data-testid="btn-play-again"
+            data-testid="btn-go-home"
           >
             Play Again
           </button>

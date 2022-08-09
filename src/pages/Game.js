@@ -6,10 +6,13 @@ class Game extends React.Component {
   state = {
     questionList: [],
     loaded: false,
+    time: 30,
+    optionsDisabled: false,
   }
 
   componentDidMount() {
     this.fetchQuestions();
+    this.timer();
   }
 
   fetchQuestions = async () => {
@@ -26,7 +29,7 @@ class Game extends React.Component {
   }
 
   renderQuestions = () => {
-    const { questionList } = this.state;
+    const { questionList, optionsDisabled } = this.state;
     if (!questionList[0]) return null;
     const correct = (
       <button
@@ -34,6 +37,7 @@ class Game extends React.Component {
         key="correct"
         type="button"
         data-testid="correct-answer"
+        disabled={ optionsDisabled }
       >
         {questionList[0].correct_answer}
       </button>
@@ -46,6 +50,7 @@ class Game extends React.Component {
           key={ index }
           type="button"
           data-testid={ `wrong-answer-${index}` }
+          disabled={ optionsDisabled }
         >
           {resp}
         </button>),
@@ -83,8 +88,21 @@ class Game extends React.Component {
     return null;
   }
 
+  timer = () => {
+    const ONE_SECOND = 1000;
+    const interval = setInterval(() => {
+      this.setState((state) => ({ time: state.time - 1 }), () => {
+        const { time } = this.state;
+        if (time === 0) {
+          this.setState({ optionsDisabled: true });
+          return clearInterval(interval);
+        }
+      });
+    }, ONE_SECOND);
+  }
+
   render() {
-    const { loaded } = this.state;
+    const { time, loaded } = this.state;
     return (
       <>
         <Header />
@@ -97,6 +115,7 @@ class Game extends React.Component {
           onClick={ this.handleClick }
         >
           { loaded && this.renderQuestions() }
+          <p>{ `Tempo restante: ${time}` }</p>
         </div>
       </>
     );

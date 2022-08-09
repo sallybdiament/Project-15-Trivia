@@ -56,21 +56,21 @@ class Game extends React.Component {
     }
   }
 
-  // handleClick = ({target}) => {
-  //  if (!target.type) return null;
-  //  console.log(target.parentElement);
-  //  const parent = target.parentElement;
-  //  console.log(Array.from(parent.children));
-  //  const children = Array.from(parent.children);
+  handleClick = ({target}) => {
+   if (!target.type) return null;
+   console.log(target.parentElement);
+   const parent = target.parentElement;
+   console.log(Array.from(parent.children));
+   const children = Array.from(parent.children);
 
-  //  children.forEach((btn) => {
-  //   if (btn.dataset.answer === 'correct') {
-  //     btn.style.border = '3px solid rgb(6 ,240, 15)'
-  //    } else {
-  //     btn.style.border = '3px solid rgb(255, 0, 0)'
-  //    } 
-  //  })
-  // }
+   children.forEach((btn) => {
+    if (btn.dataset.answer === 'correct') {
+      btn.style.border = '3px solid rgb(6 ,240, 15)'
+     } else {
+      btn.style.border = '3px solid rgb(255, 0, 0)'
+     } 
+   })
+  }
 
   renderText = (title) => {
     const { questionList } = this.state;
@@ -79,13 +79,13 @@ class Game extends React.Component {
   }
 
   render() {
-    const { questionList, loaded } = this.state;
+    const { loaded } = this.state;
     return (
       <>
         <Header />
         <p data-testid="question-category">{ this.renderText('category') }</p>
         <p data-testid="question-text">{ this.renderText('question') }</p>
-        <div type="div" data-testid="answer-options">
+        <div type="div" data-testid="answer-options" onClick={ this.handleClick }>
           { loaded && this.renderQuestions() }
         </div>
     </>
@@ -96,7 +96,3 @@ Game.propTypes = {
 }.isRequired;
 
 export default Game;
-
-// <p data-testid="question-category">{questionList[0]?.category}</p>
-// <p data-testid="question-text">{questionList[0]?.question}</p>
-//<div type="div" data-testid="answer-options" onClick={ this.handleClick }>

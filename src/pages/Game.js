@@ -3,57 +3,56 @@ import PropTypes from 'prop-types';
 import Header from '../components/Header';
 
 class Game extends React.Component {
-  // state = {
-  //   questionList: [],
-  //   loaded: false,
-  // }
+  state = {
+    questionList: [],
+    loaded: false,
+  }
 
-  // componentDidMount() {
-  //   this.fetchQuestions();
-  // }
+  componentDidMount() {
+    this.fetchQuestions();
+  }
 
-  // fetchQuestions = async () => {
-  //   const errorCode = 3;
-  //   const { history } = this.props;
-  //   const token = localStorage.getItem('token');
-  //   const response = await fetch(`https://opentdb.com/api.php?amount=5&token=${token}`);
-  //   const data = await response.json();
-  //   const { response_code: responseCode, results } = data;
-  //   if (responseCode === errorCode) {
-  //     history.push('/');
-  //   }
-  //   this.setState({ questionList: results, loaded: true });
-  // }
+  fetchQuestions = async () => {
+    const errorCode = 3;
+    const { history } = this.props;
+    const token = localStorage.getItem('token');
+    const response = await fetch(`https://opentdb.com/api.php?amount=5&token=${token}`);
+    const data = await response.json();
+    const { response_code: responseCode, results } = data;
+    if (responseCode === errorCode) {
+      history.push('/');
+    }
+    this.setState({ questionList: results, loaded: true });
+  }
 
-  // renderQuestions = () => {
-  //   const { questionList } = this.state;
-  //   const correct = (
-  //     <button data-answer="correct" key="correct" type="button" data-testid="correct-answer">
-  //       {questionList[0]?.correct_answer}
-  //     </button>);
-    
+  renderQuestions = () => {
+    const { questionList } = this.state;
+    const correct = (
+      <button data-answer="correct" key="correct" type="button" data-testid="correct-answer">
+        {questionList[0]?.correct_answer}
+      </button>);
      
-  //   const incorrects = questionList[0]?.incorrect_answers.map(
-  //     (resp, index) => (
-  //       <button
-  //         data-answer="incorrect"
-  //         key={ index }
-  //         type="button"
-  //         data-testid={ `wrong-answer-${index}` }
-  //       >
-  //         {resp}
-  //       </button>),
-  //   );
-  //   const answersArray = [correct, ...incorrects];
-  //   const answerArray2 = [...incorrects, correct];
-  //   const random = Math.random(); 
+    const incorrects = questionList[0]?.incorrect_answers.map(
+      (resp, index) => (
+        <button
+          data-answer="incorrect"
+          key={ index }
+          type="button"
+          data-testid={ `wrong-answer-${index}` }
+        >
+          {resp}
+        </button>),
+    );
+    const answersArray = [correct, ...incorrects];
+    const answerArray2 = [...incorrects, correct];
+    const random = Math.random(); 
     
-  //   if (random < 0.55) {
-  //     return answersArray;
-  //   } else {
-  //     return answerArray2
-  //   }
-  // }
+    if (random < 0.55) {
+      return answersArray;
+    } else {
+      return answerArray2
+    }
+  }
 
   // handleClick = ({target}) => {
   //  if (!target.type) return null;
@@ -72,20 +71,22 @@ class Game extends React.Component {
   // }
 
   render() {
-    // const { questionList, loaded } = this.state;
+    const { questionList, loaded } = this.state;
     return (
       <>
         <Header />
-        {/* <p data-testid="question-category">{questionList[0]?.category}</p>
+        <p data-testid="question-category">{questionList[0]?.category}</p>
         <p data-testid="question-text">{questionList[0]?.question}</p>
-        <div type="div" data-testid="answer-options" onClick={ this.handleClick }>
+        <div type="div" data-testid="answer-options">
           { loaded && this.renderQuestions() }
-        </div> */}
+        </div>
     </>
 )}};
 
-// Game.propTypes = {
-//   history: PropTypes.objectOf(PropTypes.any),
-// }.isRequired;
+Game.propTypes = {
+  history: PropTypes.objectOf(PropTypes.any),
+}.isRequired;
 
 export default Game;
+
+//<div type="div" data-testid="answer-options" onClick={ this.handleClick }>

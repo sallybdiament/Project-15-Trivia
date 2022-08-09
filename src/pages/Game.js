@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Header from '../components/Header';
 import { Redirect } from 'react-router-dom';
+import Header from '../components/Header';
 
 class Game extends React.Component {
   state = {
     questionList: [],
     loaded: false,
-    nextQuestion: false,
+    nextQuestion: true,
     qNum: 0,
     endQuestions: false,
   }
@@ -79,7 +79,7 @@ class Game extends React.Component {
         btn.style.border = '3px solid rgb(255, 0, 0)';
       }
     });
-    this.setState({ nextQuestion: true });
+    this.setState({ nextQuestion: false });
   }
 
   renderText = (title) => {
@@ -96,7 +96,7 @@ class Game extends React.Component {
       // const { history } = this.props;
       // history.push('/feedback');
     } else {
-      this.setState({ qNum: qNum + 1, nextQuestion: false });
+      this.setState({ qNum: qNum + 1, nextQuestion: true });
     }
   }
 
@@ -121,6 +121,7 @@ class Game extends React.Component {
             type="button"
             data-testid="btn-next"
             onClick={ this.handleClickNext }
+            disabled={ nextQuestion }
           >
             Next
           </button>

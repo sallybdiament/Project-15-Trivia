@@ -14,6 +14,10 @@ describe('test the Login component', () => {
     const emailInput = screen.getByLabelText('Digite o seu E-mail');
     const nameInput = screen.getByLabelText('Digite o seu Nome');
     const btn = screen.getByRole('button', { name: 'Play' });
+
+    expect(emailInput).toBeInTheDocument();
+    expect(nameInput).toBeInTheDocument();
+    expect(btn).toBeInTheDocument();
     
     expect(btn.disabled).toBe(true);
 

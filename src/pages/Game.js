@@ -7,6 +7,7 @@ class Game extends React.Component {
     questionList: [],
     loaded: false,
     nextQuestion: false,
+    qNum: 0,
   }
 
   componentDidMount() {
@@ -27,8 +28,8 @@ class Game extends React.Component {
   }
 
   renderQuestions = () => {
-    const { questionList } = this.state;
-    if (!questionList[0]) return null;
+    const { questionList, qNum } = this.state;
+    if (!questionList[qNum]) return null;
     const correct = (
       <button
         data-answer="correct"
@@ -36,11 +37,11 @@ class Game extends React.Component {
         type="button"
         data-testid="correct-answer"
       >
-        {questionList[0].correct_answer}
+        {questionList[qNum].correct_answer}
       </button>
     );
 
-    const incorrects = questionList[0].incorrect_answers.map(
+    const incorrects = questionList[qNum].incorrect_answers.map(
       (resp, index) => (
         <button
           data-answer="incorrect"
@@ -76,16 +77,28 @@ class Game extends React.Component {
         btn.style.border = '3px solid rgb(255, 0, 0)';
       }
     });
+    this.setState({ nextQuestion: true });
   }
 
   renderText = (title) => {
-    const { questionList } = this.state;
-    if (questionList[0]) return questionList[0][`${title}`];
+    const { questionList, qNum } = this.state;
+    if (questionList[qNum]) return questionList[qNum][`${title}`];
     return null;
   }
 
+  handleClickNext = () => {
+    const { qNum } = this.state;
+    const five = 5;
+    if (qNum > five) {
+      const { history } = this.props;
+      history.push('/feedback');
+    } else {
+      this.setState({ qNum: qNum + 1, nextQuestion: false });
+    }
+  }
+
   render() {
-    const { loaded } = this.state;
+    const { loaded, nextQuestion } = this.state;
     return (
       <>
         <Header />
@@ -99,6 +112,15 @@ class Game extends React.Component {
         >
           { loaded && this.renderQuestions() }
         </div>
+        {nextQuestion
+        && (<button
+          type="button"
+          data-testid="btn-next"
+          onClick={ this.handleClickNext }
+        >
+          Next
+            </button>
+        )}
       </>
     );
   }

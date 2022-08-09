@@ -6,6 +6,7 @@ class Game extends React.Component {
   state = {
     questionList: [],
     loaded: false,
+    nextQuestion: false,
   }
 
   componentDidMount() {

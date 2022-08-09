@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
 import Header from '../components/Header';
+import { storeScore } from '../redux/actions/index';
 
 class Game extends React.Component {
   state = {
@@ -12,24 +14,63 @@ class Game extends React.Component {
     endQuestions: false,
     time: 30,
     optionsDisabled: false,
+    level: '',
+    difficulty: 0,
   }
 
-  componentDidMount() {
+  componentDidMount = () => {
     this.fetchQuestions();
     this.timer();
+    // this.setDifficulty();
   }
 
   fetchQuestions = async () => {
-    const errorCode = 3;
     const { history } = this.props;
+    const errorCode = 3;
     const token = localStorage.getItem('token');
     const response = await fetch(`https://opentdb.com/api.php?amount=5&token=${token}`);
     const data = await response.json();
-    const { response_code: responseCode, results } = data;
+    const { response_code: responseCode } = data;
     if (responseCode === errorCode) {
       history.push('/');
     }
-    this.setState({ questionList: results, loaded: true });
+    console.log(data);
+    const { results } = data;
+    const [firstQuestion] = results;
+    console.log(firstQuestion);
+    const { difficulty: level } = firstQuestion;
+    console.log(level);
+
+    this.setState({
+      questionList: results, loaded: true, level }, () => this.setDifficulty());
+  }
+
+  setDifficulty = () => {
+    const { level } = this.state;
+    console.log(level);
+    switch (level) {
+    case 'hard':
+      this.setState({ difficulty: 3 });
+      break;
+    case 'medium':
+      this.setState({ difficulty: 2 });
+      break;
+    case 'easy':
+      this.setState({ difficulty: 1 });
+      break;
+    default:
+      return 0;
+    }
+  }
+
+  calculateScore = () => {
+    const { storeScoreDispatch } = this.props;
+    const ten = 10;
+    const { time, difficulty } = this.state;
+    console.log(time, difficulty);
+    const result = ten + (time * difficulty);
+    console.log(typeof result, result);
+    storeScoreDispatch(result);
   }
 
   renderQuestions = () => {
@@ -42,6 +83,7 @@ class Game extends React.Component {
         type="button"
         data-testid="correct-answer"
         disabled={ optionsDisabled }
+        onClick={ this.calculateScore }
       >
         {questionList[qNum].correct_answer}
       </button>
@@ -97,7 +139,11 @@ class Game extends React.Component {
     if (qNum > three) {
       this.setState({ endQuestions: true });
     } else {
-      this.setState({ qNum: qNum + 1, nextQuestion: true, time: 30 });
+      this.setState({
+        qNum: qNum + 1,
+        nextQuestion: true,
+        time: 30,
+        optionsDisabled: false }, () => this.timer());
     }
   }
 
@@ -107,8 +153,7 @@ class Game extends React.Component {
       this.setState((state) => ({ time: state.time - 1 }), () => {
         const { time } = this.state;
         if (time === 0) {
-          this.setState({ optionsDisabled: true });
-          return clearInterval(interval);
+          this.setState({ optionsDisabled: true }, () => clearInterval(interval));
         }
       });
     }, ONE_SECOND);
@@ -148,6 +193,11 @@ class Game extends React.Component {
 
 Game.propTypes = {
   history: PropTypes.objectOf(PropTypes.any),
+  storeScoreDispatch: PropTypes.func,
 }.isRequired;
 
-export default Game;
+const mapDispatchToProps = (dispatch) => ({
+  storeScoreDispatch: (payload) => dispatch(storeScore(payload)),
+});
+
+export default connect(null, mapDispatchToProps)(Game);

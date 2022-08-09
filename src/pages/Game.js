@@ -7,7 +7,7 @@ class Game extends React.Component {
   state = {
     questionList: [],
     loaded: false,
-    nextQuestion: true,
+    nextQuestion: false,
     qNum: 0,
     endQuestions: false,
   }
@@ -79,7 +79,7 @@ class Game extends React.Component {
         btn.style.border = '3px solid rgb(255, 0, 0)';
       }
     });
-    this.setState({ nextQuestion: false });
+    this.setState({ nextQuestion: true });
   }
 
   renderText = (title) => {
@@ -117,14 +117,14 @@ class Game extends React.Component {
         </div>
         <div>
           { endQuestions && <Redirect to="/feedback" /> }
-          <button
-            type="button"
-            data-testid="btn-next"
-            onClick={ this.handleClickNext }
-            disabled={ nextQuestion }
-          >
-            Next
-          </button>
+          { nextQuestion && (
+            <button
+              type="button"
+              data-testid="btn-next"
+              onClick={ this.handleClickNext }
+            >
+              Next
+            </button>)}
         </div>
       </>
     );

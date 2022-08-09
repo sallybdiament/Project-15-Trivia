@@ -10,10 +10,13 @@ class Game extends React.Component {
     nextQuestion: false,
     qNum: 0,
     endQuestions: false,
+    time: 30,
+    optionsDisabled: false,
   }
 
   componentDidMount() {
     this.fetchQuestions();
+    this.timer();
   }
 
   fetchQuestions = async () => {
@@ -30,7 +33,7 @@ class Game extends React.Component {
   }
 
   renderQuestions = () => {
-    const { questionList, qNum } = this.state;
+    const { questionList, qNum, optionsDisabled } = this.state;
     if (!questionList[qNum]) return null;
     const correct = (
       <button
@@ -38,6 +41,7 @@ class Game extends React.Component {
         key="correct"
         type="button"
         data-testid="correct-answer"
+        disabled={ optionsDisabled }
       >
         {questionList[qNum].correct_answer}
       </button>
@@ -50,6 +54,7 @@ class Game extends React.Component {
           key={ index }
           type="button"
           data-testid={ `wrong-answer-${index}` }
+          disabled={ optionsDisabled }
         >
           {resp}
         </button>),
@@ -67,9 +72,7 @@ class Game extends React.Component {
 
   handleClick = ({ target }) => {
     if (!target.type) return null;
-    console.log(target.parentElement);
     const parent = target.parentElement;
-    console.log(Array.from(parent.children));
     const children = Array.from(parent.children);
 
     children.forEach((btn) => {
@@ -93,15 +96,26 @@ class Game extends React.Component {
     const three = 3;
     if (qNum > three) {
       this.setState({ endQuestions: true });
-      // const { history } = this.props;
-      // history.push('/feedback');
     } else {
-      this.setState({ qNum: qNum + 1, nextQuestion: true });
+      this.setState({ qNum: qNum + 1, nextQuestion: true, time: 30 });
     }
   }
 
+  timer = () => {
+    const ONE_SECOND = 1000;
+    const interval = setInterval(() => {
+      this.setState((state) => ({ time: state.time - 1 }), () => {
+        const { time } = this.state;
+        if (time === 0) {
+          this.setState({ optionsDisabled: true });
+          return clearInterval(interval);
+        }
+      });
+    }, ONE_SECOND);
+  }
+
   render() {
-    const { loaded, nextQuestion, endQuestions } = this.state;
+    const { time, loaded, nextQuestion, endQuestions } = this.state;
     return (
       <>
         <Header />
@@ -114,6 +128,7 @@ class Game extends React.Component {
           onClick={ this.handleClick }
         >
           { loaded && this.renderQuestions() }
+          <p>{ `Tempo restante: ${time}` }</p>
         </div>
         <div>
           { endQuestions && <Redirect to="/feedback" /> }

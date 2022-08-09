@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 class Ranking extends React.Component {
     handleClickPlayAgain = () => {
@@ -21,5 +22,10 @@ class Ranking extends React.Component {
       );
     }
 }
+
+Ranking.propTypes = {
+  score: PropTypes.number,
+  assertions: PropTypes.number,
+}.isRequired;
 
 export default Ranking;

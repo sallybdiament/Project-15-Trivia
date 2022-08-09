@@ -10,6 +10,7 @@ class Ranking extends React.Component {
     render() {
       return (
         <div>
+          <h1 data-testid="ranking-title">Ranking</h1>
           <button
             name="btnPlayAgain"
             onClick={ this.handleClickPlayAgain }

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 class Ranking extends React.Component {
     handleClickPlayAgain = () => {
       const { history } = this.props;
-      history.push('./');
+      history.push('/');
     }
 
     render() {
@@ -25,8 +25,9 @@ class Ranking extends React.Component {
 }
 
 Ranking.propTypes = {
-  score: PropTypes.number,
-  assertions: PropTypes.number,
+  // score: PropTypes.number,
+  // assertions: PropTypes.number,
+  history: PropTypes.objectOf(PropTypes.any),
 }.isRequired;
 
 export default Ranking;

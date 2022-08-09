@@ -6,12 +6,12 @@ import Header from '../components/Header';
 class Feedback extends React.Component {
     handleClickPlayAgain = () => {
       const { history } = this.props;
-      history.push('./');
+      history.push('/');
     }
 
     handleClickRanking = () => {
       const { history } = this.props;
-      history.push('./ranking');
+      history.push('/ranking');
     }
 
     render() {
@@ -54,6 +54,7 @@ const mapStateToProps = (state) => ({
 Feedback.propTypes = {
   score: PropTypes.number,
   assertions: PropTypes.number,
+  history: PropTypes.objectOf(PropTypes.any),
 }.isRequired;
 
 export default connect(mapStateToProps)(Feedback);

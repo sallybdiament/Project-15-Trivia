@@ -1,11 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Redirect } from 'react-router-dom';
 import Header from '../components/Header';
 
 class Game extends React.Component {
   state = {
     questionList: [],
     loaded: false,
+    nextQuestion: false,
+    qNum: 0,
+    endQuestions: false,
     time: 30,
     optionsDisabled: false,
   }
@@ -29,8 +33,8 @@ class Game extends React.Component {
   }
 
   renderQuestions = () => {
-    const { questionList, optionsDisabled } = this.state;
-    if (!questionList[0]) return null;
+    const { questionList, qNum, optionsDisabled } = this.state;
+    if (!questionList[qNum]) return null;
     const correct = (
       <button
         data-answer="correct"
@@ -39,11 +43,11 @@ class Game extends React.Component {
         data-testid="correct-answer"
         disabled={ optionsDisabled }
       >
-        {questionList[0].correct_answer}
+        {questionList[qNum].correct_answer}
       </button>
     );
 
-    const incorrects = questionList[0].incorrect_answers.map(
+    const incorrects = questionList[qNum].incorrect_answers.map(
       (resp, index) => (
         <button
           data-answer="incorrect"
@@ -68,9 +72,7 @@ class Game extends React.Component {
 
   handleClick = ({ target }) => {
     if (!target.type) return null;
-    console.log(target.parentElement);
     const parent = target.parentElement;
-    console.log(Array.from(parent.children));
     const children = Array.from(parent.children);
 
     children.forEach((btn) => {
@@ -80,12 +82,23 @@ class Game extends React.Component {
         btn.style.border = '3px solid rgb(255, 0, 0)';
       }
     });
+    this.setState({ nextQuestion: true });
   }
 
   renderText = (title) => {
-    const { questionList } = this.state;
-    if (questionList[0]) return questionList[0][`${title}`];
+    const { questionList, qNum } = this.state;
+    if (questionList[qNum]) return questionList[qNum][`${title}`];
     return null;
+  }
+
+  handleClickNext = () => {
+    const { qNum } = this.state;
+    const three = 3;
+    if (qNum > three) {
+      this.setState({ endQuestions: true });
+    } else {
+      this.setState({ qNum: qNum + 1, nextQuestion: true, time: 30 });
+    }
   }
 
   timer = () => {
@@ -102,7 +115,7 @@ class Game extends React.Component {
   }
 
   render() {
-    const { time, loaded } = this.state;
+    const { time, loaded, nextQuestion, endQuestions } = this.state;
     return (
       <>
         <Header />
@@ -116,6 +129,17 @@ class Game extends React.Component {
         >
           { loaded && this.renderQuestions() }
           <p>{ `Tempo restante: ${time}` }</p>
+        </div>
+        <div>
+          { endQuestions && <Redirect to="/feedback" /> }
+          { nextQuestion && (
+            <button
+              type="button"
+              data-testid="btn-next"
+              onClick={ this.handleClickNext }
+            >
+              Next
+            </button>)}
         </div>
       </>
     );

@@ -81,10 +81,8 @@ class Game extends React.Component {
         <div type="div" data-testid="answer-options" onClick={ this.handleClick }>
           { loaded && this.renderQuestions() }
         </div> */}
-      </>
-    );
-  }
-}
+    </>
+)}};
 
 // Game.propTypes = {
 //   history: PropTypes.objectOf(PropTypes.any),

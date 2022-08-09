@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Header from '../components/Header';
+import { Redirect } from 'react-router-dom';
 
 class Game extends React.Component {
   state = {
@@ -8,6 +9,7 @@ class Game extends React.Component {
     loaded: false,
     nextQuestion: false,
     qNum: 0,
+    endQuestions: false,
   }
 
   componentDidMount() {
@@ -88,17 +90,18 @@ class Game extends React.Component {
 
   handleClickNext = () => {
     const { qNum } = this.state;
-    const five = 5;
-    if (qNum > five) {
-      const { history } = this.props;
-      history.push('/feedback');
+    const three = 3;
+    if (qNum > three) {
+      this.setState({ endQuestions: true });
+      // const { history } = this.props;
+      // history.push('/feedback');
     } else {
       this.setState({ qNum: qNum + 1, nextQuestion: false });
     }
   }
 
   render() {
-    const { loaded, nextQuestion } = this.state;
+    const { loaded, nextQuestion, endQuestions } = this.state;
     return (
       <>
         <Header />
@@ -112,15 +115,16 @@ class Game extends React.Component {
         >
           { loaded && this.renderQuestions() }
         </div>
-        {nextQuestion
-        && (<button
-          type="button"
-          data-testid="btn-next"
-          onClick={ this.handleClickNext }
-        >
-          Next
-            </button>
-        )}
+        <div>
+          { endQuestions && <Redirect to="/feedback" /> }
+          <button
+            type="button"
+            data-testid="btn-next"
+            onClick={ this.handleClickNext }
+          >
+            Next
+          </button>
+        </div>
       </>
     );
   }

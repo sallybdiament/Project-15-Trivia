@@ -15,7 +15,6 @@
 }
 
 body {
-  color: var(--main-text-color);
   font-size: 36px;
   max-height: 1334px;
   max-width: 100%;
@@ -36,6 +35,7 @@ label {
 }
 
 .login-container {
+  color: var(--main-text-color);
   align-items: center;
   background: url(./images/fundo\ login\ smarthphone.png);
   background-position: center;

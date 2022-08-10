@@ -109,10 +109,10 @@ class Game extends React.Component {
   }
 
   /**
-   * Apply CSS styles when any answer's button is clicked.
-   * @param {HTMLButtonElement} target The target element that on which the click event occured.
-   * @param {boolean} action If true, the function renders colored borders on the buttons; otherwise the borders' style are set to 'none'.
-   * @param {boolean} isNextClick If true, the parent element on which traverse down to the children will be accepted via the parameter "answersDiv"
+   * Apply CSS styles accordingly when either one of the answers's btn or the "Next" btn is clicked.
+   * @param { HTMLButtonElement } target The target element that on which the click event occured.
+   * @param { boolean } action If true, the function renders colored borders on the buttons; otherwise the borders' style are set to 'none'.
+   * @param { boolean } isNextClick If true, the parent element from which to traverse down to the children will be accepted via the parameter "answersDiv"
    * @param { HTMLDivElement } answersDiv this param is only used when the "handleClickNext" function is called; its value is the div element that contains the answers buttons.
    * @returns { void } The function does not return anything.
    */

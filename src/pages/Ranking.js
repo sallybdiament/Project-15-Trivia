@@ -11,6 +11,7 @@ class Ranking extends React.Component {
 
     getRankingAndRender = () => {
       const ranking = JSON.parse(localStorage.getItem('ranking'));
+      if (!ranking) return null;
       const sortedRankingArray = ranking.sort((first, sec) => sec.score - first.score);
 
       const markup = (rankingObj, index) => (

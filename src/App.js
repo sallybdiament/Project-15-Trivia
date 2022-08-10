@@ -7,6 +7,7 @@ import Settings from './pages/Settings';
 import Game from './pages/Game';
 import Feedback from './pages/Feedback';
 import Ranking from './pages/Ranking';
+import './App.css';
 
 class App extends React.Component {
   render() {

@@ -22,10 +22,12 @@ describe('test the Login component', () => {
     expect(btn.disabled).toBe(true);
 
     userEvent.type(emailInput, testEmail);
+    expect(emailInput.value).toBe(testEmail)
     expect(btn.disabled).toBe(true);
 
     
     userEvent.type(nameInput, testName);
+    expect(nameInput.value).toBe(testName)
     expect(btn.disabled).toBe(false);
 
     userEvent.type(emailInput, ' ');
@@ -37,6 +39,10 @@ describe('test the Login component', () => {
     const emailInput = screen.getByLabelText('Digite o seu E-mail');
     const nameInput = screen.getByLabelText('Digite o seu Nome');
     const btn = screen.getByRole('button', { name: 'Play' });
+
+    expect(emailInput).toBeInTheDocument();
+    expect(nameInput).toBeInTheDocument();
+    expect(btn).toBeInTheDocument();
     
     userEvent.type(emailInput, testEmail);
     userEvent.type(nameInput, testName);
@@ -48,7 +54,13 @@ describe('test the Login component', () => {
     expect(pathname).toBe('/game');
 
     const name = screen.getByTestId('header-player-name');
+    const category = screen.getByTestId('question-category');
+    const question = screen.getByTestId('question-text');
+
     expect(name).toBeInTheDocument();
+    expect(category).toBeInTheDocument();
+    expect(question).toBeInTheDocument();
+
   });
 
   it('checks the "Configurações" button', () => {

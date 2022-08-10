@@ -8,20 +8,19 @@ import { storeScore } from '../redux/actions/index';
 class Game extends React.Component {
   state = {
     questionList: [],
-    loaded: false,
     nextQuestion: false,
     qNum: 0,
     endQuestions: false,
     time: 30,
-    optionsDisabled: false,
     level: '',
     difficulty: 0,
+    shuffledQuestions: '...loading',
+    currentInterval: '',
   }
 
   componentDidMount = () => {
     this.fetchQuestions();
     this.timer();
-    // this.setDifficulty();
   }
 
   fetchQuestions = async () => {
@@ -34,20 +33,19 @@ class Game extends React.Component {
     if (responseCode === errorCode) {
       history.push('/');
     }
-    console.log(data);
     const { results } = data;
     const [firstQuestion] = results;
-    console.log(firstQuestion);
     const { difficulty: level } = firstQuestion;
-    console.log(level);
 
     this.setState({
-      questionList: results, loaded: true, level }, () => this.setDifficulty());
+      questionList: results, level }, () => {
+      this.setDifficulty();
+      this.renderQuestions();
+    });
   }
 
   setDifficulty = () => {
     const { level } = this.state;
-    console.log(level);
     switch (level) {
     case 'hard':
       this.setState({ difficulty: 3 });
@@ -67,14 +65,12 @@ class Game extends React.Component {
     const { storeScoreDispatch } = this.props;
     const ten = 10;
     const { time, difficulty } = this.state;
-    console.log(time, difficulty);
     const result = ten + (time * difficulty);
-    console.log(typeof result, result);
     storeScoreDispatch(result);
   }
 
   renderQuestions = () => {
-    const { questionList, qNum, optionsDisabled } = this.state;
+    const { questionList, qNum } = this.state;
     if (!questionList[qNum]) return null;
     const correct = (
       <button
@@ -82,7 +78,6 @@ class Game extends React.Component {
         key="correct"
         type="button"
         data-testid="correct-answer"
-        disabled={ optionsDisabled }
         onClick={ this.calculateScore }
       >
         {questionList[qNum].correct_answer}
@@ -96,7 +91,6 @@ class Game extends React.Component {
           key={ index }
           type="button"
           data-testid={ `wrong-answer-${index}` }
-          disabled={ optionsDisabled }
         >
           {resp}
         </button>),
@@ -107,21 +101,34 @@ class Game extends React.Component {
     const randomLimit = 0.55;
 
     if (random < randomLimit) {
+      this.setState({ shuffledQuestions: answersArray });
       return answersArray;
     }
+    this.setState({ shuffledQuestions: answerArray2 });
     return answerArray2;
   }
 
-  handleClick = ({ target }) => {
-    if (!target.type) return null;
-    const parent = target.parentElement;
-    const children = Array.from(parent.children);
+  /**
+   * Apply CSS styles when any answer's button is clicked.
+   * @param {HTMLButtonElement} target The target element that on which the click event occured.
+   * @param {boolean} action If true, the function renders colored borders on the buttons; otherwise the borders' style are set to 'none'.
+   * @param {boolean} isNextClick If true, the parent element on which traverse down to the children will be accepted via the parameter "answersDiv"
+   * @param { HTMLDivElement } answersDiv this param is only used when the "handleClickNext" function is called; its value is the div element that contains the answers buttons.
+   * @returns { void } The function does not return anything.
+   */
+  applyBorderColor = (target, action, isNextClick = false, answersDiv = null) => {
+    console.log(target, action, isNextClick, answersDiv);
+    if (target && !target.type && action) return null;
+    const parent = isNextClick ? answersDiv : target.parentElement;
+    console.log(parent);
+    const children = Array.from(parent.querySelectorAll('button'));
+    console.log(children);
 
     children.forEach((btn) => {
       if (btn.dataset.answer === 'correct') {
-        btn.style.border = '3px solid rgb(6 ,240, 15)';
+        btn.style.border = `${action ? '3px solid rgb(6 ,240, 15)' : 'thin inset #555'}`;
       } else {
-        btn.style.border = '3px solid rgb(255, 0, 0)';
+        btn.style.border = `${action ? '3px solid rgb(255, 0, 0)' : 'thin inset #555'}`;
       }
     });
     this.setState({ nextQuestion: true });
@@ -134,6 +141,8 @@ class Game extends React.Component {
   }
 
   handleClickNext = () => {
+    const btnNext = document.querySelector('button[data-name="btn-next"]');
+    const answersDiv = btnNext.parentElement.previousElementSibling;
     const { qNum } = this.state;
     const three = 3;
     if (qNum > three) {
@@ -143,42 +152,59 @@ class Game extends React.Component {
         qNum: qNum + 1,
         nextQuestion: true,
         time: 30,
-        optionsDisabled: false }, () => this.timer());
+      }, () => {
+        this.timer();
+        this.handleBtnsDisabling(false);
+        this.applyBorderColor(null, false, true, answersDiv);
+      });
     }
   }
 
   timer = () => {
+    const { currentInterval } = this.state;
+    clearInterval(currentInterval);
     const ONE_SECOND = 1000;
     const interval = setInterval(() => {
       this.setState((state) => ({ time: state.time - 1 }), () => {
         const { time } = this.state;
         if (time === 0) {
-          this.setState({ optionsDisabled: true }, () => clearInterval(interval));
+          clearInterval(interval);
+          this.handleBtnsDisabling(true);
         }
       });
     }, ONE_SECOND);
+    this.setState({ currentInterval: interval });
+  }
+
+  handleBtnsDisabling = (action) => {
+    const btnCorrect = document.querySelector('button[data-answer="correct"]');
+    const btnsIncorrects = document.querySelectorAll('button[data-answer="incorrect"]');
+    const btns = [btnCorrect, ...Array.from(btnsIncorrects)];
+    btns.forEach((btn) => { btn.disabled = action; });
   }
 
   render() {
-    const { time, loaded, nextQuestion, endQuestions } = this.state;
+    const { time, nextQuestion, endQuestions, shuffledQuestions } = this.state;
     return (
       <>
         <Header />
         <p data-testid="question-category">{ this.renderText('category') }</p>
         <p data-testid="question-text">{ this.renderText('question') }</p>
         <div
+          data-name="answers-container"
           role="presentation"
           type="div"
           data-testid="answer-options"
-          onClick={ this.handleClick }
+          onClick={ (e) => this.applyBorderColor(e.target, true) }
         >
-          { loaded && this.renderQuestions() }
+          { shuffledQuestions }
           <p>{ `Tempo restante: ${time}` }</p>
         </div>
         <div>
           { endQuestions && <Redirect to="/feedback" /> }
           { nextQuestion && (
             <button
+              data-name="btn-next"
               type="button"
               data-testid="btn-next"
               onClick={ this.handleClickNext }

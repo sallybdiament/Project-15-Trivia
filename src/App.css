@@ -1,0 +1,86 @@
+:root {
+  --color-one: #ebcbe3;
+  --color-two: #b790af;
+  --color-three: #684762;
+  --color-four: #20141e;
+  --color-five: #4a564c;
+  --color-six: #b7c3b9;
+  --main-text-color: #fff;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  color: var(--main-text-color);
+  font-size: 36px;
+  max-height: 1334px;
+  max-width: 100%;
+}
+
+label {
+  line-height: 56px;
+  text-align: center;
+  text-shadow: 2px 0 var(--color-three) , -2px 0 var(--color-three) , 0 2px var(--color-three) , 0 -2px var(--color-three) ,
+    1px 1px var(--color-three) , -1px -1px var(--color-three) , 1px -1px var(--color-three) , -1px 1px var(--color-three);
+  font-weight: 600;
+  font-size: 41px;
+}
+
+.trivia-logo {
+  margin-bottom: -270px;
+  width: 140%;
+}
+
+.login-container {
+  align-items: center;
+  background: url(./images/fundo\ login\ smarthphone.png);
+  background-position: center;
+  background-size: cover;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  height: 1334px;
+  justify-content: center;
+  position: relative;
+}
+
+.login-form {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  justify-content: center;
+}
+
+.login-input {
+  height: 48px;
+  width: 350px;
+  border-radius: 20px;
+}
+
+.btn {
+  background-color: var(--main-text-color);
+  color: var(--color-three);
+  font-weight: 600;
+  font-size: inherit;
+  padding: 13px 18px;
+  margin-top: 14px;
+  border-radius: 10px;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.login-config-btn {
+  bottom: 24px;
+  position: absolute;
+  right: 36px;
+}
+
+.btn--link-shuffle {
+  color: inherit;
+  text-decoration: none;
+}

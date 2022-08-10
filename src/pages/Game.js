@@ -14,13 +14,14 @@ class Game extends React.Component {
     time: 30,
     level: '',
     difficulty: 0,
-    shuffledQuestions: '...loading',
     currentInterval: '',
+    mathRandomValue: '',
   }
 
   componentDidMount = () => {
     this.fetchQuestions();
     this.timer();
+    this.setState({ mathRandomValue: Math.random() });
   }
 
   fetchQuestions = async () => {
@@ -70,8 +71,8 @@ class Game extends React.Component {
   }
 
   renderQuestions = () => {
-    const { questionList, qNum } = this.state;
-    if (!questionList[qNum]) return null;
+    const { questionList, qNum, mathRandomValue } = this.state;
+    if (!questionList[qNum] || !mathRandomValue) return null;
     const correct = (
       <button
         data-answer="correct"
@@ -97,14 +98,14 @@ class Game extends React.Component {
     );
     const answersArray = [correct, ...incorrects];
     const answerArray2 = [...incorrects, correct];
-    const random = Math.random();
+    const random = mathRandomValue;
     const randomLimit = 0.55;
 
     if (random < randomLimit) {
-      this.setState({ shuffledQuestions: answersArray });
+      // this.setState({ shuffledQuestions: answersArray });
       return answersArray;
     }
-    this.setState({ shuffledQuestions: answerArray2 });
+    // this.setState({ shuffledQuestions: answerArray2 });
     return answerArray2;
   }
 
@@ -117,12 +118,9 @@ class Game extends React.Component {
    * @returns { void } The function does not return anything.
    */
   applyBorderColor = (target, action, isNextClick = false, answersDiv = null) => {
-    console.log(target, action, isNextClick, answersDiv);
     if (target && !target.type && action) return null;
     const parent = isNextClick ? answersDiv : target.parentElement;
-    console.log(parent);
     const children = Array.from(parent.querySelectorAll('button'));
-    console.log(children);
 
     children.forEach((btn) => {
       if (btn.dataset.answer === 'correct') {
@@ -156,6 +154,7 @@ class Game extends React.Component {
         this.timer();
         this.handleBtnsDisabling(false);
         this.applyBorderColor(null, false, true, answersDiv);
+        this.setState({ mathRandomValue: Math.random() });
       });
     }
   }
@@ -184,7 +183,7 @@ class Game extends React.Component {
   }
 
   render() {
-    const { time, nextQuestion, endQuestions, shuffledQuestions } = this.state;
+    const { time, nextQuestion, endQuestions } = this.state;
     return (
       <>
         <Header />
@@ -197,7 +196,7 @@ class Game extends React.Component {
           data-testid="answer-options"
           onClick={ (e) => this.applyBorderColor(e.target, true) }
         >
-          { shuffledQuestions }
+          { this.renderQuestions() }
           <p>{ `Tempo restante: ${time}` }</p>
         </div>
         <div>

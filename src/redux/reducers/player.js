@@ -15,6 +15,7 @@ const playerReducer = (state = DEFAULT_STATE, action) => {
       gravatarEmail: action.payload.email,
       name: action.payload.name,
       photoUrl: action.payload.photo,
+      score: 0,
     };
   case STORE_SCORE:
     return {

@@ -3,9 +3,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import md5 from 'crypto-js/md5';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { storePlayer } from '../redux/actions/index';
 import triviaLogo from '../images/logo trivia sem tracado.png';
-import { Link, Redirect } from 'react-router-dom';
 
 // Importações
 

@@ -1,11 +1,23 @@
+/*
+screen computador - 1366x768
+screen smarthphone - 750x1334
+*/
+
 :root {
+
   --color-one: #ebcbe3;
+
   --color-two: #b790af;
+
   --color-three: #684762;
+
   --color-four: #20141e;
+
   --color-five: #4a564c;
+
   --color-six: #b7c3b9;
-  --main-text-color: #fff;
+
+  --main-text-color: white;
 }
 
 * {
@@ -21,12 +33,14 @@ body {
 }
 
 label {
+  font-size: 41px;
+  font-weight: 600;
   line-height: 56px;
   text-align: center;
-  text-shadow: 2px 0 var(--color-three) , -2px 0 var(--color-three) , 0 2px var(--color-three) , 0 -2px var(--color-three) ,
-    1px 1px var(--color-three) , -1px -1px var(--color-three) , 1px -1px var(--color-three) , -1px 1px var(--color-three);
-  font-weight: 600;
-  font-size: 41px;
+  text-shadow: 2px 0 var(--color-three) , -2px 0 var(--color-three)
+    0 2px var(--color-three) , 0 -2px var(--color-three)
+    1px 1px var(--color-three) , -1px -1px var(--color-three)
+    1px -1px var(--color-three) , -1px 1px var(--color-three);
 }
 
 .trivia-logo {
@@ -35,17 +49,17 @@ label {
 }
 
 .login-container {
-  color: var(--main-text-color);
   align-items: center;
-  background: url(./images/fundo\ login\ smarthphone.png);
+  background: url('./images/fundo\ login\ smarthphone.png');
   background-position: center;
   background-size: cover;
-  width: 100%;
+  color: var(--main-text-color);
   display: flex;
   flex-direction: column;
   height: 1334px;
   justify-content: center;
   position: relative;
+  width: 100%;
 }
 
 .login-form {
@@ -57,21 +71,21 @@ label {
 }
 
 .login-input {
+  border-radius: 20px;
   height: 48px;
   width: 350px;
-  border-radius: 20px;
 }
 
 .btn {
   background-color: var(--main-text-color);
-  color: var(--color-three);
-  font-weight: 600;
-  font-size: inherit;
-  padding: 13px 18px;
-  margin-top: 14px;
   border-radius: 10px;
-  font-family: inherit;
+  color: var(--color-three);
   cursor: pointer;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: 600;
+  margin-top: 14px;
+  padding: 13px 18px;
 }
 
 .login-config-btn {

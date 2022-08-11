@@ -2,16 +2,28 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
+// BEM: BLOCK-ELEMENT-MODIFICADOR
+// header
+// header__score
+// header__score--green
 class Header extends React.Component {
   render() {
     const { photo, name, score } = this.props;
+    const { pathname } = document.location;
     return (
-      <header>
+      <header
+        className={ `header ${pathname === '/feedback' ? 'header--feedback' : ''}` }
+      >
         <div>
           <img src={ photo } alt={ name } data-testid="header-profile-picture" />
-          <p data-testid="header-player-name">{ name }</p>
+          <span data-testid="header-player-name">{ name }</span>
         </div>
-        <p data-testid="header-score">{ score }</p>
+        <p data-testid="header-score">
+          Pontuação:
+          {' '}
+          { score }
+
+        </p>
       </header>
     );
   }

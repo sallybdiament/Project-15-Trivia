@@ -20,7 +20,7 @@ class Game extends React.Component {
 
   componentDidMount = () => {
     this.fetchQuestions();
-    this.timer();
+    // this.timer();
     this.setState({ mathRandomValue: Math.random() });
   }
 
@@ -35,7 +35,9 @@ class Game extends React.Component {
       history.push('/');
     }
     const { results } = data;
+
     const [firstQuestion] = results;
+
     const { difficulty: level } = firstQuestion;
 
     this.setState({
@@ -75,6 +77,7 @@ class Game extends React.Component {
     if (!questionList[qNum] || !mathRandomValue) return null;
     const correct = (
       <button
+        className="btn"
         data-answer="correct"
         key="correct"
         type="button"
@@ -88,6 +91,7 @@ class Game extends React.Component {
     const incorrects = questionList[qNum].incorrect_answers.map(
       (resp, index) => (
         <button
+          className="btn"
           data-answer="incorrect"
           key={ index }
           type="button"
@@ -187,30 +191,38 @@ class Game extends React.Component {
     return (
       <>
         <Header />
-        <p data-testid="question-category">{ this.renderText('category') }</p>
-        <p data-testid="question-text">{ this.renderText('question') }</p>
-        <div
-          data-name="answers-container"
-          role="presentation"
-          type="div"
-          data-testid="answer-options"
-          onClick={ (e) => this.applyBorderColor(e.target, true) }
-        >
-          { this.renderQuestions() }
-          <p>{ `Tempo restante: ${time}` }</p>
-        </div>
-        <div>
-          { endQuestions && <Redirect to="/feedback" /> }
-          { nextQuestion && (
-            <button
-              data-name="btn-next"
-              type="button"
-              data-testid="btn-next"
-              onClick={ this.handleClickNext }
+        <section className="game-container">
+          <div className="questions-container">
+            <p className="questions-category" data-testid="question-category">
+              { this.renderText('category') }
+            </p>
+            <p className="questions-question" data-testid="question-text">{ this.renderText('question') }</p>
+            <p>{ `Tempo restante: ${time}` }</p>
+
+            <div
+              data-name="answers-container"
+              role="presentation"
+              type="div"
+              data-testid="answer-options"
+              onClick={ (e) => this.applyBorderColor(e.target, true) }
             >
-              Next
-            </button>)}
-        </div>
+              { this.renderQuestions() }
+            </div>
+            
+            <div>
+              { endQuestions && <Redirect to="/feedback" /> }
+              { nextQuestion && (
+                <button
+                  data-name="btn-next"
+                  type="button"
+                  data-testid="btn-next"
+                  onClick={ this.handleClickNext }
+                >
+                  Próxima
+                </button>)}
+            </div>
+          </div>
+        </section>
       </>
     );
   }

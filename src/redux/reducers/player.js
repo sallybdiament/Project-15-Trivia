@@ -1,9 +1,9 @@
 import { STORE_PLAYER, STORE_SCORE } from '../actions/index';
 
 const DEFAULT_STATE = {
-  name: '',
+  name: 'Anderson',
   assertions: 0,
-  score: 0,
+  score: 10,
   gravatarEmail: '',
 };
 

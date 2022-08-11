@@ -78,6 +78,7 @@ class GameShuffle extends React.Component {
     if (!questionList[qNum]) return null;
     const correct = (
       <button
+        className="btn"
         data-answer="correct"
         key="correct"
         type="button"
@@ -92,6 +93,7 @@ class GameShuffle extends React.Component {
     const incorrects = questionList[qNum].incorrect_answers.map(
       (resp, index) => (
         <button
+          className="btn"
           data-answer="incorrect"
           key={ index }
           type="button"
@@ -164,28 +166,35 @@ class GameShuffle extends React.Component {
     return (
       <>
         <Header />
-        <p data-testid="question-category">{ this.renderText('category') }</p>
-        <p data-testid="question-text">{ this.renderText('question') }</p>
-        <div
-          role="presentation"
-          type="div"
-          data-testid="answer-options"
-          onClick={ this.handleClick }
-        >
-          { loaded && this.renderQuestions() }
-          <p>{ `Tempo restante: ${time}` }</p>
-        </div>
-        <div>
-          { endQuestions && <Redirect to="/feedback" /> }
-          { nextQuestion && (
-            <button
-              type="button"
-              data-testid="btn-next"
-              onClick={ this.handleClickNext }
+        <section className="game-container">
+          <div className="questions-container">
+            <p data-testid="question-category">{ this.renderText('category') }</p>
+            <p data-testid="question-text">{ this.renderText('question') }</p>
+            <p>{ `Tempo restante: ${time}` }</p>
+
+            <div
+              role="presentation"
+              type="div"
+              data-testid="answer-options"
+              onClick={ this.handleClick }
             >
-              Next
-            </button>)}
-        </div>
+              { loaded && this.renderQuestions() }
+
+            </div>
+
+            <div>
+              { endQuestions && <Redirect to="/feedback" /> }
+              { nextQuestion && (
+                <button
+                  type="button"
+                  data-testid="btn-next"
+                  onClick={ this.handleClickNext }
+                >
+                  Próximo
+                </button>)}
+            </div>
+          </div>
+        </section>
       </>
     );
   }

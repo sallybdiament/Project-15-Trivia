@@ -98,3 +98,29 @@ label {
   color: inherit;
   text-decoration: none;
 }
+
+/* ============================= */
+
+/* ========== MIN 1366x768 SCREEN SIZE ============== */
+
+@media ( min-width : 1366px ) {
+
+  .trivia-logo {
+    margin-bottom: -270px;
+    width: 80%;
+  }
+
+  .login-container {
+    align-items: center;
+    background: url('./images/loginBackgroundLargeScreen.png');
+    background-position: center;
+    background-size: cover;
+    color: var(--main-text-color);
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    justify-content: center;
+    position: relative;
+    width: 100%;
+  }
+}

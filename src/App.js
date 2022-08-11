@@ -7,6 +7,7 @@ import Settings from './pages/Settings';
 import Game from './pages/Game';
 import Feedback from './pages/Feedback';
 import Ranking from './pages/Ranking';
+import GameShuffle from './pages/GameShuffle';
 import './App.css';
 
 class App extends React.Component {
@@ -18,6 +19,7 @@ class App extends React.Component {
         <Route path="/game" component={ Game } />
         <Route path="/feedback" component={ Feedback } />
         <Route path="/ranking" component={ Ranking } />
+        <Route path="/shuffle" component={ GameShuffle } />
       </Switch>
     );
   }

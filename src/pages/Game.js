@@ -196,7 +196,9 @@ class Game extends React.Component {
             <p className="questions-category" data-testid="question-category">
               { this.renderText('category') }
             </p>
-            <p className="questions-question" data-testid="question-text">{ this.renderText('question') }</p>
+            <p className="questions-question" data-testid="question-text">
+              { this.renderText('question') }
+            </p>
             <p>{ `Tempo restante: ${time}` }</p>
 
             <div
@@ -208,7 +210,6 @@ class Game extends React.Component {
             >
               { this.renderQuestions() }
             </div>
-            
             <div>
               { endQuestions && <Redirect to="/feedback" /> }
               { nextQuestion && (

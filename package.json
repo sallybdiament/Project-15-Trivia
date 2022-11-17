@@ -1,4 +1,5 @@
 {
+  "homepage": "https://sallybdiament.github.io/Project-15-Trivia/",
   "name": "trivia-react-redux",
   "version": "0.1.0",
   "private": true,
@@ -20,6 +21,8 @@
     "redux-thunk": "^2.3.0"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "cy": "cypress run",
     "cy:open": "cypress open",
     "start": "react-scripts start",
@@ -67,7 +70,8 @@
     "mochawesome-report-generator": "^5.1.0",
     "stylelint": "^13.8.0",
     "stylelint-config-standard": "20.0.0",
-    "stylelint-order": "^4.1.0"
+    "stylelint-order": "^4.1.0",
+    "gh-pages": "^4.0.0"
   },
   "jest": {
     "coveragePathIgnorePatterns": [

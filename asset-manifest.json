@@ -1,0 +1,24 @@
+{
+  "files": {
+    "main.css": "/Project-15-Trivia/static/css/main.ecc843ec.chunk.css",
+    "main.js": "/Project-15-Trivia/static/js/main.15e0fd4c.chunk.js",
+    "main.js.map": "/Project-15-Trivia/static/js/main.15e0fd4c.chunk.js.map",
+    "runtime-main.js": "/Project-15-Trivia/static/js/runtime-main.ef1e2f7e.js",
+    "runtime-main.js.map": "/Project-15-Trivia/static/js/runtime-main.ef1e2f7e.js.map",
+    "static/js/2.665ba02f.chunk.js": "/Project-15-Trivia/static/js/2.665ba02f.chunk.js",
+    "static/js/2.665ba02f.chunk.js.map": "/Project-15-Trivia/static/js/2.665ba02f.chunk.js.map",
+    "index.html": "/Project-15-Trivia/index.html",
+    "precache-manifest.37572037d4c5bede4a77d0d5d9cbf7b4.js": "/Project-15-Trivia/precache-manifest.37572037d4c5bede4a77d0d5d9cbf7b4.js",
+    "service-worker.js": "/Project-15-Trivia/service-worker.js",
+    "static/css/main.ecc843ec.chunk.css.map": "/Project-15-Trivia/static/css/main.ecc843ec.chunk.css.map",
+    "static/js/2.665ba02f.chunk.js.LICENSE.txt": "/Project-15-Trivia/static/js/2.665ba02f.chunk.js.LICENSE.txt",
+    "static/media/App.css": "/Project-15-Trivia/static/media/loginBackgroundLargeScreen.ee752941.png",
+    "static/media/logo trivia sem tracado.png": "/Project-15-Trivia/static/media/logo trivia sem tracado.e0674fb4.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.ef1e2f7e.js",
+    "static/js/2.665ba02f.chunk.js",
+    "static/css/main.ecc843ec.chunk.css",
+    "static/js/main.15e0fd4c.chunk.js"
+  ]
+}
